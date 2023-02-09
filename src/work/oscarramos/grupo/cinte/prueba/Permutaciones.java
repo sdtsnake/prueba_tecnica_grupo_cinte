@@ -2,7 +2,6 @@ package work.oscarramos.grupo.cinte.prueba;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class Permutaciones {
     public static ArrayList<Integer> permutacionArray(int[] arreglo, int pemutaciones) {
@@ -12,12 +11,14 @@ public class Permutaciones {
             inicial = Arrays.copyOf(permutacion, permutacion.length);
             for (int i = 0; i < inicial.length; i++) {
                 int ant = 0;
-                if (i == 0) {
-                    permutar(inicial, permutacion, i, ant);
-                } else {
+                int post = 0;
+                if (i > 0) {
                     ant = inicial[i - 1];
-                    permutar(inicial, permutacion, i, ant);
                 }
+                if (i < inicial.length - 1) {
+                    post = inicial[i + 1];
+                }
+                permutacion[i] = ant ^ post;
             }
         }
         ArrayList resultado = new ArrayList<Integer>();
@@ -27,25 +28,9 @@ public class Permutaciones {
         return resultado;
     }
 
-    private static void permutar(int[] inicial, int[] permutacion, int i, int ant) {
-        int posterior = 0;
-        if (i == permutacion.length - 1) {
-            posterior = 0;
-        } else {
-            posterior = inicial[i + 1];
-        }
-        if (ant == posterior) {
-            permutacion[i] = 0;
-        } else {
-            permutacion[i] = 1;
-        }
-    }
-
     public static void main(String[] args) {
         int[] arreglo = {0, 1, 0};
         ArrayList<Integer> respuesta = permutacionArray(arreglo, 2);
-
         System.out.println(respuesta);
-
     }
 }
